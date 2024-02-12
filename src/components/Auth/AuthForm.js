@@ -1,4 +1,5 @@
 import { useState, useRef, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import classes from './AuthForm.module.css';
 import AuthContext from '../../store/auth-context';
@@ -6,6 +7,7 @@ import AuthContext from '../../store/auth-context';
 const API_KEY = process.env.REACT_APP_FIREBASE_AUTH_REST_API_KEY;
 
 const AuthForm = () => {
+  const history = useHistory();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
@@ -57,7 +59,7 @@ const AuthForm = () => {
     })
       .then((data) => {
         authCtx.login(data.idToken);
-        console.log('Token: ', data.idToken);
+        history.replace('/');
       })
       .catch((err) => {
         alert(err.message);
